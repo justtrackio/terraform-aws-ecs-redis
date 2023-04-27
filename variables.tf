@@ -63,6 +63,12 @@ variable "redis_maxmemory" {
   default     = 25
 }
 
+variable "redis_maxmemory_policy" {
+  type        = string
+  description = "When your Redis instance memory is full, and a new write comes in, Redis evicts keys to make room for the write based on your instance's maxmemory policy."
+  default     = "allkeys-lru"
+}
+
 variable "service_discovery_name" {
   type        = string
   description = "The name of the service."

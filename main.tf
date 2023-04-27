@@ -18,7 +18,7 @@ module "container_definition" {
 
   command = [
     "--maxmemory ${var.redis_maxmemory}mb",
-    "--maxmemory-policy allkeys-lru"
+    "--maxmemory-policy ${var.redis_maxmemory_policy}"
   ]
 }
 
@@ -45,7 +45,7 @@ module "redis" {
 
   tags = module.this.tags
 
-  service_placement_constraints = var.service_placement_constraints != null ? var.service_placement_constraints : module.this.environment == "prod" ? [{
+  service_placement_constraints = length(var.service_placement_constraints) != 0 ? var.service_placement_constraints : module.this.environment == "prod" ? [{
     type       = "memberOf"
     expression = "attribute:spotinst.io/container-instance-lifecycle==od"
   }] : []
