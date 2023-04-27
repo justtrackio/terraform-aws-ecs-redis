@@ -43,10 +43,7 @@ module "redis" {
     container_port = 6379
   }]
 
-  tags = {
-    Model           = "kvstore_${try(module.this.attributes[0], "")}"
-    ApplicationType = "redis"
-  }
+  tags = module.this.tags
 
   service_placement_constraints = var.service_placement_constraints != null ? var.service_placement_constraints : module.this.environment == "prod" ? [{
     type       = "memberOf"
