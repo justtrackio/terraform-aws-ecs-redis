@@ -1,5 +1,5 @@
 module "redis" {
-  source = "./../.."
+  source = "../.."
 
   ecs_cluster_arn                = "your-ecs-cluster"
   service_discovery_name         = "redis"
