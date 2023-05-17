@@ -40,11 +40,6 @@ variable "deployment_minimum_healthy_percent" {
   default     = 0
 }
 
-variable "ecs_cluster_arn" {
-  type        = string
-  description = "The ARN of the ECS cluster where service will be provisioned"
-}
-
 variable "launch_type" {
   type        = string
   description = "The launch type on which to run your service. Valid values are `EC2` and `FARGATE`"
@@ -69,16 +64,6 @@ variable "redis_maxmemory_policy" {
   default     = "allkeys-lru"
 }
 
-variable "service_discovery_name" {
-  type        = string
-  description = "The name of the service."
-}
-
-variable "service_discovery_namespace_id" {
-  type        = string
-  description = "The ID of the namespace that you want to use to create the service."
-}
-
 variable "service_placement_constraints" {
   type = list(object({
     type       = string
@@ -88,7 +73,10 @@ variable "service_placement_constraints" {
   default     = []
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "The VPC ID where resources are created"
+variable "label_orders" {
+  type = object({
+    ecs = optional(list(string), ["stage", "tenant", "name"])
+  })
+  default     = {}
+  description = "Overrides the `labels_order` for the different labels to modify ID elements appear in the `id`"
 }

@@ -1,62 +1,79 @@
-module "container_definition" {
-  count   = module.this.enabled ? 1 : 0
-  source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.58.3"
+module "ecs_label" {
+  source  = "justtrackio/label/null"
+  version = "0.26.0"
 
-  container_image              = "${var.container_image_repository}:${var.container_image_tag}"
-  container_name               = var.container_name
-  container_cpu                = var.container_cpu
-  container_memory_reservation = var.container_memory_reservation
-
-  port_mappings = [
-    {
-      containerPort = 6379
-      hostPort      = 0
-      protocol      = "tcp"
-    },
-  ]
-
-  command = [
-    "--maxmemory ${var.redis_maxmemory}mb",
-    "--maxmemory-policy ${var.redis_maxmemory_policy}"
-  ]
+  context     = module.this.context
+  label_order = var.label_orders.ecs
 }
 
-module "redis" {
-  count   = module.this.enabled ? 1 : 0
-  source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.68.0"
+module "service" {
+  source  = "terraform-aws-modules/ecs/aws//modules/service"
+  version = "5.0.1"
 
-  context = module.this.context
-
-  container_definition_json          = "[${sensitive(module.container_definition[0].json_map_encoded)}]"
-  deployment_maximum_percent         = var.deployment_maximum_percent
+  name                               = module.ecs_label.id
+  cluster_arn                        = data.aws_ecs_cluster.default.arn
+  cpu                                = null
+  memory                             = null
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
-  ecs_cluster_arn                    = var.ecs_cluster_arn
+  deployment_maximum_percent         = var.deployment_maximum_percent
   launch_type                        = var.launch_type
   network_mode                       = var.network_mode
-  vpc_id                             = var.vpc_id
+  enable_autoscaling                 = false
 
-  service_registries = [{
-    registry_arn   = aws_service_discovery_service.default[0].arn
+  security_group_use_name_prefix     = false
+  iam_role_use_name_prefix           = false
+  task_exec_iam_role_use_name_prefix = false
+  tasks_iam_role_use_name_prefix     = false
+
+  security_group_name     = module.this.id
+  iam_role_name           = module.this.id
+  task_exec_iam_role_name = "${module.this.id}-exec"
+  tasks_iam_role_name     = "${module.this.id}-task"
+
+  service_registries = {
+    registry_arn   = aws_service_discovery_service.default.arn
     container_name = var.container_name
     container_port = 6379
-  }]
+  }
 
   tags = module.this.tags
 
-  service_placement_constraints = length(var.service_placement_constraints) != 0 ? var.service_placement_constraints : module.this.environment == "prod" ? [{
+  placement_constraints = length(var.service_placement_constraints) != 0 ? var.service_placement_constraints : module.this.environment == "prod" ? [{
     type       = "memberOf"
     expression = "attribute:spotinst.io/container-instance-lifecycle==od"
   }] : []
+
+  container_definitions = {
+    redis = {
+      name               = var.container_name
+      cpu                = var.container_cpu
+      memory_reservation = var.container_memory_reservation
+      image              = "${var.container_image_repository}:${var.container_image_tag}"
+
+      port_mappings = [
+        {
+          name          = "redis"
+          containerPort = 6379
+          protocol      = "tcp"
+        }
+      ]
+
+      command = [
+        "--maxmemory ${var.redis_maxmemory}mb",
+        "--maxmemory-policy ${var.redis_maxmemory_policy}"
+      ]
+    }
+  }
+
+  requires_compatibilities = []
+  runtime_platform         = {}
 }
 
 resource "aws_service_discovery_service" "default" {
-  count = module.this.enabled ? 1 : 0
-  name  = var.service_discovery_name
+  name = "${module.this.name}.${module.this.stage}"
 
   dns_config {
-    namespace_id = var.service_discovery_namespace_id
+    namespace_id = data.aws_service_discovery_dns_namespace.default.id
 
     dns_records {
       ttl  = 60
