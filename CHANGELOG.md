@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v1.0.1...v2.0.0) (2023-05-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* refactor module (#5)
+
+### Features
+
+* refactor module ([#5](https://github.com/justtrackio/terraform-aws-ecs-redis/issues/5)) ([a64064e](https://github.com/justtrackio/terraform-aws-ecs-redis/commit/a64064eb751402f0fa71bbf0066b21bbc8e3620a))
+
 ## [1.0.1](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v1.0.0...v1.0.1) (2023-05-15)
 
 
