@@ -40,6 +40,14 @@ variable "deployment_minimum_healthy_percent" {
   default     = 0
 }
 
+variable "label_orders" {
+  type = object({
+    ecs = optional(list(string), ["stage", "tenant", "name"])
+  })
+  default     = {}
+  description = "Overrides the `labels_order` for the different labels to modify ID elements appear in the `id`"
+}
+
 variable "launch_type" {
   type        = string
   description = "The launch type on which to run your service. Valid values are `EC2` and `FARGATE`"
@@ -64,6 +72,12 @@ variable "redis_maxmemory_policy" {
   default     = "allkeys-lru"
 }
 
+variable "service_discovery_name" {
+  type        = string
+  description = "Custom name used if defined for service discovery"
+  default     = null
+}
+
 variable "service_placement_constraints" {
   type = list(object({
     type       = string
@@ -71,12 +85,4 @@ variable "service_placement_constraints" {
   }))
   description = "The rules that are taken into consideration during task placement. Maximum number of placement_constraints is 10. See [`placement_constraints`](https://www.terraform.io/docs/providers/aws/r/ecs_service.html#placement_constraints-1) docs"
   default     = []
-}
-
-variable "label_orders" {
-  type = object({
-    ecs = optional(list(string), ["stage", "tenant", "name"])
-  })
-  default     = {}
-  description = "Overrides the `labels_order` for the different labels to modify ID elements appear in the `id`"
 }
