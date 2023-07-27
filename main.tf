@@ -1,3 +1,7 @@
+locals {
+  service_discovery_name = var.service_discovery_name == null ? "${module.this.name}.${module.this.stage}" : var.service_discovery_name
+}
+
 module "ecs_label" {
   source  = "justtrackio/label/null"
   version = "0.26.0"
@@ -70,7 +74,7 @@ module "service" {
 }
 
 resource "aws_service_discovery_service" "default" {
-  name = "${module.this.name}.${module.this.stage}"
+  name = local.service_discovery_name
 
   dns_config {
     namespace_id = data.aws_service_discovery_dns_namespace.default.id
