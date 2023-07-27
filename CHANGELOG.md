@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.0.0...v2.1.0) (2023-07-27)
+
+
+### Features
+
+* add_service_discovery_name_variable ([#13](https://github.com/justtrackio/terraform-aws-ecs-redis/issues/13)) ([7b70511](https://github.com/justtrackio/terraform-aws-ecs-redis/commit/7b70511fa62c0a17d237d2c933a7c39690933c49))
+
 ## [2.0.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v1.0.1...v2.0.0) (2023-05-22)
 
 
