@@ -12,7 +12,7 @@ module "ecs_label" {
 
 module "service" {
   source  = "terraform-aws-modules/ecs/aws//modules/service"
-  version = "5.0.1"
+  version = "5.11.1"
 
   name                               = module.ecs_label.id
   cluster_arn                        = data.aws_ecs_cluster.default.arn
