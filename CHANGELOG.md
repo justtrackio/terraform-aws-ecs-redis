@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.1.0...v2.2.0) (2024-04-15)
+
+
+### Features
+
+* add more flexibility to naming pattern ([#36](https://github.com/justtrackio/terraform-aws-ecs-redis/issues/36)) ([2840e58](https://github.com/justtrackio/terraform-aws-ecs-redis/commit/2840e58e18a25152571e7987c2436a4b021a2b68))
+
 ## [2.1.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.0.0...v2.1.0) (2023-07-27)
 
 
