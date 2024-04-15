@@ -1,3 +1,15 @@
+variable "cloudwatch_log_group_enabled" {
+  type        = bool
+  description = "A boolean to disable cloudwatch log group creation"
+  default     = true
+}
+
+variable "cloudwatch_log_retention_in_days" {
+  type        = number
+  description = "The number of days to retain logs for the log group"
+  default     = 1
+}
+
 variable "container_cpu" {
   type        = number
   description = "The number of cpu units to reserve for the container. This is optional for tasks using Fargate launch type and the total amount of container_cpu of all containers in a task will need to be lower than the task-level cpu value"
@@ -43,6 +55,7 @@ variable "deployment_minimum_healthy_percent" {
 variable "label_orders" {
   type = object({
     ecs = optional(list(string), ["stage", "tenant", "name"])
+    iam = optional(list(string)),
   })
   default     = {}
   description = "Overrides the `labels_order` for the different labels to modify ID elements appear in the `id`"
