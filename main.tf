@@ -78,7 +78,7 @@ moved {
 
 module "service" {
   source  = "justtrackio/ecs-alb-service-task/aws"
-  version = "1.3.0"
+  version = "1.4.0"
 
   container_definition_json          = local.container_definitions
   deployment_maximum_percent         = var.deployment_maximum_percent
