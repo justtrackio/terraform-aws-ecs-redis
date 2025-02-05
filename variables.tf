@@ -19,7 +19,7 @@ variable "container_cpu" {
 variable "container_image_repository" {
   type        = string
   description = "The image repository used to start the container. Images in the Docker Hub registry available by default"
-  default     = "redis"
+  default     = "public.ecr.aws/docker/library/redis"
 }
 
 variable "container_image_tag" {
