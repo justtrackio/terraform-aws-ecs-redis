@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.2.0...v2.3.0) (2025-02-05)
+
+
+### Features
+
+* pull redis from ecr by default ([#63](https://github.com/justtrackio/terraform-aws-ecs-redis/issues/63)) ([b5a3df0](https://github.com/justtrackio/terraform-aws-ecs-redis/commit/b5a3df0d57999a38dff6cec5c948f72a2d84d290))
+
 ## [2.2.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.1.0...v2.2.0) (2024-04-15)
 
 
