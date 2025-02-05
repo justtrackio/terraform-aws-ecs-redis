@@ -57,41 +57,26 @@ module "container_definition" {
 }
 
 moved {
-  from = module.service.aws_ecs_service.ignore_changes_task_definition
-  to   = module.ecs_service.aws_ecs_service.default
+  from = module.service.aws_ecs_service.this
+  to   = module.service.aws_ecs_service.ignore_changes_task_definition
 }
 
 moved {
-  from = module.service.aws_iam_role.ecs_exec
-  to   = module.ecs_service.aws_iam_role.ecs_exec
+  from = module.service.aws_ecs_task_definition.this
+  to   = module.service.aws_ecs_task_definition.default
 }
 
 moved {
-  from = module.service.aws_iam_role.ecs_task
-  to   = module.ecs_service.aws_iam_role.ecs_task
+  from = module.service.aws_iam_role.task_exec
+  to   = module.service.aws_iam_role.ecs_exec
 }
 
 moved {
-  from = module.service.aws_iam_role_policy_attachment.ecs_task
-  to   = module.ecs_service.aws_iam_role_policy_attachment.ecs_task
+  from = module.service.aws_iam_role.tasks
+  to   = module.service.aws_iam_role.ecs_task
 }
 
-moved {
-  from = module.service.aws_iam_role_policy_attachment.ecs_exec
-  to   = module.ecs_service.aws_iam_role_policy_attachment.ecs_exec
-}
-
-moved {
-  from = module.service.aws_iam_role_policy.ecs_exec
-  to   = module.ecs_service.aws_iam_role_policy.ecs_exec
-}
-
-moved {
-  from = module.service.aws_ecs_task_definition.default
-  to   = module.ecs_service.aws_ecs_task_definition.default
-}
-
-module "ecs_service" {
+module "service" {
   source  = "justtrackio/ecs-alb-service-task/aws"
   version = "1.3.0"
 
@@ -101,7 +86,6 @@ module "ecs_service" {
   desired_count                      = 1
   ecs_cluster_arn                    = data.aws_ecs_cluster.default.arn
   ignore_changes_task_definition     = var.ignore_changes_task_definition
-  wait_for_steady_state              = var.wait_for_steady_state
   launch_type                        = var.launch_type
   network_mode                       = var.network_mode
   service_placement_constraints      = var.service_placement_constraints
