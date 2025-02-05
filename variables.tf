@@ -52,6 +52,12 @@ variable "deployment_minimum_healthy_percent" {
   default     = 0
 }
 
+variable "ignore_changes_task_definition" {
+  type        = bool
+  description = "Whether to ignore changes in container definition and task definition in the ECS service"
+  default     = false
+}
+
 variable "label_orders" {
   type = object({
     ecs = optional(list(string), ["stage", "tenant", "name"])

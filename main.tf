@@ -85,6 +85,7 @@ module "service" {
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   desired_count                      = 1
   ecs_cluster_arn                    = data.aws_ecs_cluster.default.arn
+  ignore_changes_task_definition     = var.ignore_changes_task_definition
   launch_type                        = var.launch_type
   network_mode                       = var.network_mode
   service_placement_constraints      = var.service_placement_constraints
