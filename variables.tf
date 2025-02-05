@@ -19,7 +19,7 @@ variable "container_cpu" {
 variable "container_image_repository" {
   type        = string
   description = "The image repository used to start the container. Images in the Docker Hub registry available by default"
-  default     = "redis"
+  default     = "public.ecr.aws/docker/library/redis"
 }
 
 variable "container_image_tag" {
@@ -50,6 +50,12 @@ variable "deployment_minimum_healthy_percent" {
   type        = number
   description = "The lower limit (as a percentage of `desired_count`) of the number of tasks that must remain running and healthy in a service during a deployment"
   default     = 0
+}
+
+variable "ignore_changes_task_definition" {
+  type        = bool
+  description = "Whether to ignore changes in container definition and task definition in the ECS service"
+  default     = false
 }
 
 variable "label_orders" {
@@ -98,4 +104,10 @@ variable "service_placement_constraints" {
   }))
   description = "The rules that are taken into consideration during task placement. Maximum number of placement_constraints is 10. See [`placement_constraints`](https://www.terraform.io/docs/providers/aws/r/ecs_service.html#placement_constraints-1) docs"
   default     = []
+}
+
+variable "wait_for_steady_state" {
+  type        = bool
+  description = "If true, it will wait for the service to reach a steady state (like aws ecs wait services-stable) before continuing"
+  default     = true
 }
