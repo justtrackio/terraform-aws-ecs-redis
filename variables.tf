@@ -105,3 +105,9 @@ variable "service_placement_constraints" {
   description = "The rules that are taken into consideration during task placement. Maximum number of placement_constraints is 10. See [`placement_constraints`](https://www.terraform.io/docs/providers/aws/r/ecs_service.html#placement_constraints-1) docs"
   default     = []
 }
+
+variable "wait_for_steady_state" {
+  type        = bool
+  description = "If true, it will wait for the service to reach a steady state (like aws ecs wait services-stable) before continuing"
+  default     = true
+}
