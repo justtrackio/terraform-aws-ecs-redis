@@ -1,3 +1,10 @@
+## [2.4.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.3.0...v2.4.0) (2025-02-07)
+
+
+### Features
+
+* move backwards compatibility ([#64](https://github.com/justtrackio/terraform-aws-ecs-redis/issues/64)) ([1f23af0](https://github.com/justtrackio/terraform-aws-ecs-redis/commit/1f23af0f59234be58962af45ac9170489c803a17))
+
 ## [2.3.0](https://github.com/justtrackio/terraform-aws-ecs-redis/compare/v2.2.0...v2.3.0) (2025-02-05)
 
 
