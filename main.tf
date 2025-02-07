@@ -57,6 +57,26 @@ module "container_definition" {
 }
 
 moved {
+  from = module.service.aws_ecs_service.this
+  to   = module.service.aws_ecs_service.ignore_changes_task_definition
+}
+
+moved {
+  from = module.service.aws_ecs_task_definition.this
+  to   = module.service.aws_ecs_task_definition.default
+}
+
+moved {
+  from = module.service.aws_iam_role.task_exec
+  to   = module.service.aws_iam_role.ecs_exec
+}
+
+moved {
+  from = module.service.aws_iam_role.tasks
+  to   = module.service.aws_iam_role.ecs_task
+}
+
+moved {
   from = module.service.aws_ecs_service.ignore_changes_task_definition
   to   = module.ecs_service.aws_ecs_service.default
 }
@@ -105,6 +125,8 @@ module "ecs_service" {
   launch_type                        = var.launch_type
   network_mode                       = var.network_mode
   service_placement_constraints      = var.service_placement_constraints
+  task_cpu                           = var.task_cpu
+  task_memory                        = var.task_memory
   service_registries = [{
     registry_arn   = aws_service_discovery_service.default.arn
     container_name = var.container_name

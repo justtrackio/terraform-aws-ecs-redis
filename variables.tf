@@ -106,6 +106,18 @@ variable "service_placement_constraints" {
   default     = []
 }
 
+variable "task_cpu" {
+  type        = number
+  description = "The number of CPU units used by the task. If using `FARGATE` launch type `task_cpu` must match [supported memory values](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  default     = null
+}
+
+variable "task_memory" {
+  type        = number
+  description = "The amount of memory (in MiB) used by the task. If using Fargate launch type `task_memory` must match [supported cpu value](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  default     = null
+}
+
 variable "wait_for_steady_state" {
   type        = bool
   description = "If true, it will wait for the service to reach a steady state (like aws ecs wait services-stable) before continuing"
